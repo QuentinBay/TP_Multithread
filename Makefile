@@ -37,6 +37,18 @@ question2: question2.c
 question3: question3.c
 	gcc -Wall -pthread -o question3 question3.c -lm
 
+question5: question5.c
+	gcc -Wall -pthread -o question5 question5.c -lm
+
+question7: question7.c
+	gcc -Wall -pthread -o question7 question7.c -lm	
+	
+question8: question8.c
+	gcc -Wall -pthread -o question8 question8.c -lm	
+	
+question10: question10.c
+	gcc -Wall -pthread -o question10 question10.c -lm
+	
 # add your own rules when you create new programs
 
 #########################
@@ -52,5 +64,5 @@ run2: question2
 ## utilities
 
 clean:
-	rm -f question1 question2 tiny.txt small.txt medium.txt large.txt many.txt 
+	rm -f question1 question2 question10 tiny.txt small.txt medium.txt large.txt many.txt 
 

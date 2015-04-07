@@ -133,7 +133,7 @@ int main(void)
 {
 	uint64_t nb;
 	FILE * file;
-	file = fopen ("fileTest.txt","r");
+	file = fopen ("fileQuestion4.txt","r");
 	char str[60];
 	while ( fgets(str, 60, file)!=NULL)
 	{
