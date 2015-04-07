@@ -5,24 +5,76 @@
 #include <math.h>
 #include <pthread.h>
 
-/*
-void * bidon (void *)
+
+void print_prime_factors(uint64_t n)
 {
-	FILE * file;
-	file = fopen ("fileTest.txt","r");
-	char str[60];
-	while ( fgets(str, 60, file)!=NULL)
+					/*****************************
+					*  		INITIALISATION		 *
+					*****************************/
+	printf("%ju : ", n );
+
+	//On divise n par 2 jusqu'à ce qu'il ne soit plus divisible par 2
+	while ( n%2 == 0)
 	{
-		nb=atol(str);
-		print_prime_factors(nb);
+		n=n/2;
+		printf("%d ", 2);
 	}
-}*/
 
+	if ( n == 1 )
+	{
+		//On a trouvé tous les facteurs premiers
+		printf("\n");
+		return;
+	}
 
-void* print_prime_factors(void* u)
+			/***************************************************
+			*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
+			****************************************************/
+	uint64_t i, j;
+	i=3;
+	while(n!=1 && i <= n)
+	{
+		//printf("Boucle 1 :%ju\n", i);
+		//Vérifions s'il s'agit d'un nombre premier
+		for (j = 2; j <= i; j++)
+		{
+			//printf("Boucle 2 :%ju\n", j);
+			if (i%j==0)
+			{
+				if (i==j)
+				{
+					//i est divisible par j et i = j donc c'est un nombre premier
+					if (n%i==0)
+					{
+						//i est un facteur premier de n
+						n=n/i;
+						printf("%ju ", i);
+						if (n==1)
+						{
+							//On a fini !
+							printf("\n");
+							return;
+						}
+						else
+						{
+							//On recommence à chercher un facteur premier
+							i=1;
+						}
+						
+					}
+				}
+				break;
+			}
+		}
+		i+=2;
+	}
+
+}
+
+void print_prime_factorsVersionNulle(uint64_t n)
+/*
+*Cette méthode ne fonctionne pas sur des nombres > 5.10^5, elle renvoie une segmentation fault*/
 {
-	uint64_t *u2 = (uint64_t*)u;
-	uint64_t n = *u2;
 	//Boucle pour parcourir les nombres premiers
 	uint64_t nbTest;
 	uint64_t diviseur;
@@ -32,7 +84,7 @@ void* print_prime_factors(void* u)
 /*----------------------------------Trouver les nombres premiers--------------------------------*/
 	for (nbTest = 2; nbTest < n; nbTest++)
 	{
-		//printf("Boucle 1 :%ju\n", nbTest);
+		//
 		diviseur = 2;
 		for(diviseur = 2; diviseur <= nbTest; diviseur++)
 		{
@@ -79,27 +131,12 @@ void* print_prime_factors(void* u)
 
 int main(void)
 {
-	uint64_t nb;
-	uint64_t nb2;
-	FILE * file;
-	file = fopen ("fileTest.txt","r");
-	char str[60];
-	char str2[60];
-	//Pour les threads
-	int thread;
-	pthread_t unThread;
-	while ( fgets(str, 60, file)!=NULL && fgets(str2, 60, file)!=NULL)
-	{
-		nb=atol(str);
-		nb2=atol(str2);
-		thread = pthread_create(&unThread, NULL, print_prime_factors, &nb2);
-		thread = pthread_join(unThread);
-	}
-    //print_prime_factors(77); // expected result:   77: 7 11
-    //print_prime_factors(84); // expected result:   84: 2 2 3 7
-    //print_prime_factors(429496);
+	
+    print_prime_factors(77); // expected result:   77: 7 11
+    print_prime_factors(84); // expected result:   84: 2 2 3 7
+    print_prime_factors(429496);
     // expected result:   429496729675917: 3 18229 7853726291
-    //print_prime_factors(429496729675917);
+    //print_prime_factors2(429496729675917);
 
 
     return 0;
