@@ -10,9 +10,8 @@ void* thread_prime_factors(void * u)
 	//Déréférencement
 	uint64_t* u2 = (uint64_t *) u;
 	uint64_t n = *u2;
-	//print_prime_factors(n);
-	printf("Calcul dans thread0 de : %ju \n",n);
 	print_prime_factors(n);
+	
 	return NULL;
 }
 
@@ -91,21 +90,25 @@ int main(void)
 	uint64_t nb;
 	uint64_t nb2;
 	FILE * file;
-	file = fopen ("fileTest.txt","r");
+	file = fopen ("fileQuestion4.txt","r");
 	char str[60];
 	char str2[60];
 	pthread_t thread0;
+	pthread_t thread1;
 
 	while ( fgets(str, 60, file)!=NULL && fgets(str2, 60, file)!=NULL )
 	{
 		nb=atol(str);
 		nb2=atol(str2);
 		printf("2 nb en même temps\n");
-		print_prime_factors(nb);
-		pthread_create(&thread0, NULL, thread_prime_factors, &nb2);
+		pthread_create(&thread0, NULL, thread_prime_factors, &nb);
+		pthread_create(&thread1, NULL, thread_prime_factors, &nb2);
+
+		
 
 		//Wait for the thread0 to be done
 		pthread_join(thread0, NULL);
+		pthread_join(thread1, NULL);
 	}
 
 
