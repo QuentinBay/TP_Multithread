@@ -32,7 +32,10 @@ question1: question1.c
 	gcc -Wall -pthread -o question1 question1.c -lm
 
 question2: question2.c
-	gcc -Wall -pthread -o question2 question2.c 
+	gcc -Wall -pthread -o question2 question2.c -lm
+
+question3: question3.c
+	gcc -Wall -pthread -o question3 question3.c -lm
 
 # add your own rules when you create new programs
 
