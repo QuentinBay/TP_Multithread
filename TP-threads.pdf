@@ -1,0 +1,389 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="fr" xml:lang="fr">
+<head>
+    <title>Moodle - INSA de Lyon - Cycle Ingénieur</title>
+	<link rel="shortcut icon" href="http://moodle.insa-lyon.fr/theme/insa_sc/favicon.png" />
+	<meta name="keywords" content="moodle, Moodle - INSA de Lyon - Cycle Ingénieur " />
+	<meta content="noindex,nofollow" name="robots"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/standard/styles.php" />
+<link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/custom_corners/styles.php" />
+<link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/insa_sc/styles.php" />
+<meta name="description" content=" Vous êtes sur la plateforme e-learning de l'Environnement Numérique de Formation dédiée au Second Cycle de l'INSA de Lyon (enseignement en départements)" /><script type="text/javascript"  src="http://moodle.insa-lyon.fr/lib/yui/yahoo/yahoo-min.js"></script><script type="text/javascript"  src="http://moodle.insa-lyon.fr/lib/yui/event/event-min.js"></script><script type="text/javascript"  src="http://moodle.insa-lyon.fr/lib/yui/connection/connection-min.js"></script><script type="text/javascript"  src="http://moodle.insa-lyon.fr/lib/swfobject/swfobject.js"></script><script type="text/javascript">
+//<![CDATA[
+  var flashversion = swfobject.getFlashPlayerVersion();
+  YAHOO.util.Connect.asyncRequest('GET','http://moodle.insa-lyon.fr/login/environment.php?sesskey=Xk9v9WRjmc&flashversion='+flashversion.major+'.'+flashversion.minor+'.'+flashversion.release);
+//]]>
+</script>
+<!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/standard/styles_ie7.css" />
+<![endif]-->
+<!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/standard/styles_ie6.css" />
+<![endif]-->
+<!--[if IE 8]>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<![endif]-->
+<!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/insa_sc/styles_ie7.css" />
+<![endif]-->
+<!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" href="http://moodle.insa-lyon.fr/theme/insa_sc/styles_ie6.css" />
+<![endif]-->
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://dsi-outils.insa-lyon.fr/piwik/" : "http://dsi-outils.insa-lyon.fr/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 6);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script>
+<!--
+<noscript><p><img src="http://dsi-outils.insa-lyon.fr/piwik/piwik.php?idsite=6" style="border:0" alt=""/></p></noscript>
+-->
+<!-- End Piwik Tag -->
+<script type="text/javascript">
+	_editor_skin = "xp-black"; // If you want use a skin, add the name (of the folder) here
+	_editor_lang = "en"; // And the language we need to use in the editor.
+	var mathcolor = "black"; // You may change the color the formulae are displayed (default: red)
+	var mathfontfamily = "Arial"; //and the font (default: serif, which is good I think)
+</script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/asciimath/ASCIIMathML.js"></script>
+
+
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/speller/spellChecker.js"></script>
+<!--<style type="text/css">/*<![CDATA[*/ body{behavior:url(http://moodle.insa-lyon.fr/lib/csshover.htc);} /*]]>*/</style>-->
+
+
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/javascript-static.js"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/javascript-mod.php"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/overlib/overlib.js"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/overlib/overlib_cssstyle.js"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/cookies.js"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/ufo.js"></script>
+<script type="text/javascript" src="http://moodle.insa-lyon.fr/lib/dropdown.js"></script>  
+
+<script type="text/javascript" defer="defer">
+//<![CDATA[
+setTimeout('fix_column_widths()', 20);
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+function openpopup(url, name, options, fullscreen) {
+    var fullurl = "http://moodle.insa-lyon.fr" + url;
+    var windowobj = window.open(fullurl, name, options);
+    if (!windowobj) {
+        return true;
+    }
+    if (fullscreen) {
+        windowobj.moveTo(0, 0);
+        windowobj.resizeTo(screen.availWidth, screen.availHeight);
+    }
+    windowobj.focus();
+    return false;
+}
+
+function uncheckall() {
+    var inputs = document.getElementsByTagName('input');
+    for(var i = 0; i < inputs.length; i++) {
+        inputs[i].checked = false;
+    }
+}
+
+function checkall() {
+    var inputs = document.getElementsByTagName('input');
+    for(var i = 0; i < inputs.length; i++) {
+        inputs[i].checked = true;
+    }
+}
+
+function inserttext(text) {
+  text = ' ' + text + ' ';
+  if ( opener.document.forms['theform'].message.createTextRange && opener.document.forms['theform'].message.caretPos) {
+    var caretPos = opener.document.forms['theform'].message.caretPos;
+    caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? text + ' ' : text;
+  } else {
+    opener.document.forms['theform'].message.value  += text;
+  }
+  opener.document.forms['theform'].message.focus();
+}
+
+function getElementsByClassName(oElm, strTagName, oClassNames){
+	var arrElements = (strTagName == "*" && oElm.all)? oElm.all : oElm.getElementsByTagName(strTagName);
+	var arrReturnElements = new Array();
+	var arrRegExpClassNames = new Array();
+	if(typeof oClassNames == "object"){
+		for(var i=0; i<oClassNames.length; i++){
+			arrRegExpClassNames.push(new RegExp("(^|\\s)" + oClassNames[i].replace(/\-/g, "\\-") + "(\\s|$)"));
+		}
+	}
+	else{
+		arrRegExpClassNames.push(new RegExp("(^|\\s)" + oClassNames.replace(/\-/g, "\\-") + "(\\s|$)"));
+	}
+	var oElement;
+	var bMatchesAll;
+	for(var j=0; j<arrElements.length; j++){
+		oElement = arrElements[j];
+		bMatchesAll = true;
+		for(var k=0; k<arrRegExpClassNames.length; k++){
+			if(!arrRegExpClassNames[k].test(oElement.className)){
+				bMatchesAll = false;
+				break;
+			}
+		}
+		if(bMatchesAll){
+			arrReturnElements.push(oElement);
+		}
+	}
+	return (arrReturnElements)
+}
+//]]>
+</script>
+<script type="text/javascript" charset="utf-8">
+/* <![CDATA[ */
+    var CSSClass={};CSSClass.is=function(e,c){if(typeof e=="string")e=document.getElementById(e);var classes=e.className;if(!classes)return false;if(classes==c)return true;return e.className.search("\\b"+c+"\\b")!=-1;};CSSClass.add=function(e,c){if(typeof e=="string")e=document.getElementById(e);if(CSSClass.is(e,c))return;if(e.className)c=" "+c;e.className+=c;};CSSClass.remove=function(e,c){if(typeof e=="string")e=document.getElementById(e);e.className=e.className.replace(new RegExp("\\b"+c+"\\b\\s*","g"),"");};
+    
+    var script = {
+        corrections: function () {
+            if (top.user) {
+                top.document.getElementsByTagName('frameset')[0].rows = "117,30%,0,200";
+            }
+            
+            // check for layouttabel and add layouttable classes to body
+            var tagname = 'nolayouttable';
+            if (document.getElementById('middle-column')) {
+                var lc = document.getElementById('left-column');
+                var rc = document.getElementById('right-column');
+                if ( lc && rc ) {
+                    tagname = 'haslayouttable rightandleftcolumn';
+                } else if (lc) {
+                    tagname = 'haslayouttable onlyleftcolumn';
+                } else if (rc) {
+                    tagname = 'haslayouttable onlyrightcolumn';
+                } else {
+                    tagname = 'haslayouttable onlymiddlecolumn';
+                }
+            }
+            
+            function setbodytag (tagname) {
+                var bd = document.getElementsByTagName('body')[0];
+                if (bd) {
+                    CSSClass.add(bd, tagname);
+                } else {
+                    setTimeout(function() { setbodytag(tagname) }, 30);
+                }
+            }
+            
+            setTimeout(function() { setbodytag(tagname) }, 30);
+        },
+        
+        init: function() {
+            script.corrections();
+        }
+    };
+/* ]]> */
+</script>
+ <script type="text/javascript" src="http://moodle.insa-lyon.fr/theme/insa_sc/moodle-plus-upload.js"></script>
+
+</head>
+
+<body  class="course course-1 dir-ltr lang-fr_utf8 notinpopup" id="site-index">
+
+    <div id="page">
+<a class="skip" href="#maincontent">Passer au contenu principal</a>
+
+    <div id="header-home" class=" clearfix">        <div class="headermain">
+			<a href="http://www.insa-lyon.fr" title="INSA de Lyon"><span class="linkinsa"></span></a>
+			<a href="http://moodle.insa-lyon.fr"><span class="linkmoodle"></span></a>
+        </div>
+        <div class="headermenu"><div class="logininfo">Connecté sous le nom « <a  href="http://moodle.insa-lyon.fr/user/view.php?id=25455&amp;course=1">Bayart Quentin</a> »  (<a  href="http://moodle.insa-lyon.fr/login/logout.php?sesskey=Xk9v9WRjmc">Déconnexion</a>)</div></div>
+    </div>    <!-- END OF HEADER -->
+<div id="content"><script src="lib/dbtreeview/treeview.js" type="text/javascript"></script>
+<link href="lib/dbtreeview/treeview.css" rel="stylesheet" type="text/css" media="screen"/>
+
+
+<table id="layout-table" summary="layout">
+  <tr>
+  <td style="width: 210px;" id="left-column"><div class="wrap wraplevel2 ">
+<div class="bt"><div>&nbsp;</div></div>
+<div class="i1"><div class="i2"><div class="i3"><a href="#sb-1" class="skip-block">Sauter Ressources INSA</a><div  id="inst5" class="block_html sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst5" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Ressources INSA', 'Cacher bloc Ressources INSA'); return false;" alt="Cacher bloc Ressources INSA" title="Cacher bloc Ressources INSA" class="hide-show-image" /><h2>Ressources INSA</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content">
+<div style="width: 210px;"> <a target="_blank" title="Environnement Numérique de Travail de lINSA de Lyon" href="https://planete.insa-lyon.fr/">PLANETE@INSA</a> <br /> <a target="_blank" title="Serveur de polycopiés DocINSA" href="http://docinsa.insa-lyon.fr/polycop/index.php?rub=02"></a><a href="http://leguide.insa-lyon.fr/" target="_blank" title="Le Guide">Guide des services numériques</a><br /> <a href="http://webtv.insa-lyon.fr/" target="_blank">WebTV</a><br /> </div></div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst5","Afficher bloc Ressources INSA","Cacher bloc Ressources INSA");
+//]]>
+</script><span id="sb-1" class="skip-block-to"></span><a href="#sb-2" class="skip-block">Sauter Mes cours</a><div  id="inst522" class="block_course_list sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst522" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Mes cours', 'Cacher bloc Mes cours'); return false;" alt="Cacher bloc Mes cours" title="Cacher bloc Mes cours" class="hide-show-image" /><h2>Mes cours</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content">
+<ul class='list'>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="Algo" href="http://moodle.insa-lyon.fr/course/view.php?id=1291">Algorithmes et Structures de Données</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="ALGO1" href="http://moodle.insa-lyon.fr/course/view.php?id=1283">Algorithmique</a></div></li>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-AM" href="http://moodle.insa-lyon.fr/course/view.php?id=934">Architecture des ordinateurs</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="BDDi" href="http://moodle.insa-lyon.fr/course/view.php?id=1260">Bases de données distribuées</a></div></li>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-BDR" href="http://moodle.insa-lyon.fr/course/view.php?id=1044">Bases de Données Relationnelles</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="IAD-3IF" href="http://moodle.insa-lyon.fr/course/view.php?id=1201">Informations administratives</a></div></li>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-Mathématiques discrètes" href="http://moodle.insa-lyon.fr/course/view.php?id=1018">Mathématiques discrètes</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="UML-3IF" href="http://moodle.insa-lyon.fr/course/view.php?id=1275">Modelisation UML</a></div></li>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-PR" href="http://moodle.insa-lyon.fr/course/view.php?id=1243">PROBABILITÉS / STATISTIQUES 1</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-RE" href="http://moodle.insa-lyon.fr/course/view.php?id=1075">Réseaux</a></div></li>
+<li class="r0"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-SHC" href="http://moodle.insa-lyon.fr/course/view.php?id=794">Sciences humaines et communication</a></div></li>
+<li class="r1"><div class="icon column c0"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/i/course.gif" class="icon" alt="Catégorie de cours" /></div><div class="column c1"><a  title="3IF-TI-ACR" href="http://moodle.insa-lyon.fr/course/view.php?id=1242">Théorie de l'information et arithmétique pour la cryptographie</a></div></li>
+</ul>
+<div class="footer"><a href="http://moodle.insa-lyon.fr/course/index.php">Tous les cours</a> ...</div></div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst522","Afficher bloc Mes cours","Cacher bloc Mes cours");
+//]]>
+</script><span id="sb-2" class="skip-block-to"></span></div></div></div>
+<div class="bb"><div>&nbsp;</div></div>
+</div></td><td id="middle-column"><span id="maincontent"></span><div class="wrap wraplevel2 ">
+<div class="bt"><div>&nbsp;</div></div>
+<div class="i1"><div class="i2"><div class="i3"><div class="wrap wraplevel3 generalbox sitetopic ccbox box">
+<div class="bt"><div>&nbsp;</div></div>
+<div class="i1"><div class="i2"><div class="i3">
+<h1 style="line-height: 1.2em; text-align: left;">Bienvenue sur la plateforme pédagogique Moodle</h1>Pour les élèves et enseignants du Second Cycle (Cycle Ingénieur), vous pouvez dès à présent consulter la liste des thématiques disponibles pour suivre vos cours en ligne. La liste devenant de plus en plus longue, la méthode la plus simple est de vous identifier (avec le bouton Connexion INSA) puis de consulter la liste des cours auxquels vous êtes inscrit dans la boite &quot;Mes Cours&quot; qui apparaîtra alors dans la colonne de gauche.<br /><br />Enseignants, vous pouvez vous adressez au <a target="_blank" href="http://moodle.insa-lyon.fr/mod/resource/view.php?id=2645">correspondant Moodle de votre département</a>, afin de mettre en ligne des ressources pédagogiques numériques<br /><br /><hr style="width: 100%; height: 2px;" /><br /> 
+<ul class="section img-text">
+<li class="activity forum" id="module-2536" title="mardi  29 mai 2007, 12:07"><a   href="http://moodle.insa-lyon.fr/mod/forum/view.php?id=2536"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/mod/forum/icon.gif" class="activityicon" alt="" /> <span>Quoi de neuf sur ce site<span class="accesshide " > Forum</span></span></a></li>
+<li class="activity glossary" id="module-3607" title="mardi  15 janvier 2008, 13:49"><a   href="http://moodle.insa-lyon.fr/mod/glossary/view.php?id=3607"><img src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/mod/glossary/icon.gif" class="activityicon" alt="" /> <span>Les termes de Moodle<span class="accesshide " > Glossaire</span></span></a></li>
+</ul><!--class='section'-->
+
+</div></div></div>
+<div class="bb"><div>&nbsp;</div></div>
+</div><h2 class="headingblock header ">Catégories de cours</h2><div class="wrap wraplevel3 generalbox categorybox ccbox box">
+<div class="bt"><div>&nbsp;</div></div>
+<div class="i1"><div class="i2"><div class="i3"><script type="text/javascript">
+var attrs = new Array();
+attrs["code"]="0";
+var params = new Object();
+params.attributes = attrs;
+params.id = "treev1";
+params.plusImgSrc = "pix/smartpix.php/insa_sc/ftv2pnode.gif";
+params.minusImgSrc = "pix/smartpix.php/insa_sc/ftv2mnode.gif";
+params.emptyImgSrc = "pix/smartpix.php/insa_sc/ftv2blank.gif";
+params.waitImgSrc = "pix/smartpix.php/insa_sc/wait.gif";
+params.defaultImageOpen = "pix/smartpix.php/insa_sc/opened.gif";
+params.defaultImageClosed = "pix/smartpix.php/insa_sc/closed.gif";
+
+try{new DBTreeView.TreeView(params);}
+catch(err){
+  txt="There was an error on this page.\n\n"
+  txt+="Error description: " + err + "\n\n"
+  txt+="Click OK to continue.\n\n"
+  alert(txt)
+}
+</script>
+<noscript>
+<div>   A tree for site navigation will open here if you enable JavaScript in your browser.<br/>
+<a href="http://www.google.com/support/bin/answer.py?answer=23852">More informations</a></div></noscript>
+</div></div></div>
+<div class="bb"><div>&nbsp;</div></div>
+</div><form id="coursesearch" action="http://moodle.insa-lyon.fr/course/search.php" method="get"><fieldset class="coursesearchbox invisiblefieldset"><label for="shortsearchbox">Rechercher des cours: </label><input type="text" id="shortsearchbox" size="12" name="search" alt="Rechercher des cours" value="" /><input type="submit" value="Valider" /></fieldset></form><br /></div></div></div>
+<div class="bb"><div>&nbsp;</div></div>
+</div></td><td style="width: 210px;" id="right-column"><div class="wrap wraplevel2 ">
+<div class="bt"><div>&nbsp;</div></div>
+<div class="i1"><div class="i2"><div class="i3"><a href="#sb-3" class="skip-block">Sauter Besoin d'aide</a><div  id="inst9340" class="block_html sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst9340" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Besoin d\'aide', 'Cacher bloc Besoin d\'aide'); return false;" alt="Cacher bloc Besoin d\'aide" title="Cacher bloc Besoin d\'aide" class="hide-show-image" /><h2>Besoin d'aide</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content">
+<div style="width: 210px;"> <a target="_blank" href="https://helpdesk.insa-lyon.fr">Demande de formation</a><br /><br /><span style="font-weight: bold;">Soutien en ligne</span><br />- <a href="http://moodle.insa-lyon.fr/course/view.php?id=904" target="_blank">Vos premiers pas / tutoriels</a><br />- <a href="http://moodle.insa-lyon.fr/mod/forum/view.php?id=2549" target="_blank">F.A.Q.</a><br /><br /><span style="font-weight: bold;">Assistance Moodle</span><br />- <a target="_blank" href="http://moodle2.insa-lyon.fr/mod/wiki/view.php?id=1369#toc-19">Correspondants Moodle</a><br />- <a target="_blank" href="http://moodle.insa-lyon.fr/mod/resource/view.php?id=16521">Équipe TICE</a><br />- <a target="_blank" href="https://helpdesk.insa-lyon.fr">Support@INSA</a><br /><br /><span style="font-weight: bold;">Navigation</span><br />- Optimisée et sécurisée avec <a target="_blank" href="http://www.mozilla-europe.org/fr/firefox/">Firefox</a><br /> </div> </div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst9340","Afficher bloc Besoin d\'aide","Cacher bloc Besoin d\'aide");
+//]]>
+</script><span id="sb-3" class="skip-block-to"></span><a href="#sb-4" class="skip-block">Sauter Recherche globale</a><div  id="inst8746" class="block_search sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst8746" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Recherche globale', 'Cacher bloc Recherche globale'); return false;" alt="Cacher bloc Recherche globale" title="Cacher bloc Recherche globale" class="hide-show-image" /><h2>Recherche globale</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content"><form id="searchquery" method="get" action="http://moodle.insa-lyon.fr/search/query.php"><div><label for="block_search_q">Rechercher dans le site</label><input id="block_search_q" type="text" name="query_string" /><input type="submit" value="Lancer la recherche" /></div></form></div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst8746","Afficher bloc Recherche globale","Cacher bloc Recherche globale");
+//]]>
+</script><span id="sb-4" class="skip-block-to"></span>
+<a href="#sb-5" class="skip-block">Sauter Utilisateurs en ligne</a><div  id="inst7" class="block_online_users sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst7" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Utilisateurs en ligne', 'Cacher bloc Utilisateurs en ligne'); return false;" alt="Cacher bloc Utilisateurs en ligne" title="Cacher bloc Utilisateurs en ligne" class="hide-show-image" /><h2>Utilisateurs en ligne</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content"><div class="info">(5 dernières minutes)</div><ul class='list'>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=25455&amp;course=1" title="IF (maintenant)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::3j1zdr/hpMzANCxqXep8pTcg+bawDvviG6MmoiGGnzY=" height="16" width="12" alt="Avatar Bayart Quentin"  />Bayart Quentin</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=29824&amp;course=1" title="IF (17 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::OQulmUN64bWbWyxTnBpUW0gGsV5VtoHxG0AHrzxaBGRMbDozWRIHWw==" height="16" width="12" alt="Avatar Fernandez Thomas"  />Fernandez Thomas</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=23528&amp;course=1" title="TC (1 min 23 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::A2EDPOs+fjaMiVajQnet1olV6RmD/a+MJ/Yjbcuzmg8=" height="16" width="12" alt="Avatar Laurent Raphael"  />Laurent Raphael</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=25345&amp;course=1" title="GMD (1 min 26 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::6yI4PmkD59HiK/SSKDcM/6eEr7aMbADyRMhyipC6+y4=" height="16" width="12" alt="Avatar Souvrain Julien"  />Souvrain Julien</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=25275&amp;course=1" title="GEA (2 min 25 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::G1bqXl/HlBfQNzA8/tomdWhVpPKvOZtZp1y8VBgIx7DUf9a5RvD7lQ==" height="16" width="12" alt="Avatar Gominski Dimitri"  />Gominski Dimitri</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=31128&amp;course=1" title="GMD (2 min 27 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::BWgBydNZaairPCbfZUdTOMZrh12F2ZzuUw4y3DNSl3Y=" height="16" width="12" alt="Avatar Stajuda Mateusz"  />Stajuda Mateusz</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=17382&amp;course=1" title="TC (3 min 21 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::OQulmUN64bXsebg/yZgZRVgjwAhZreWwduA/uRo6yXY=" height="16" width="12" alt="Avatar Delbono Thomas"  />Delbono Thomas</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=25348&amp;course=1" title="SGM (4 min 7 s)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::J0Ol6gI7kIO26wK8OoQmMKcOgHpYrSEuDMrQlFsLyXQ=" height="16" width="12" alt="Avatar Saadi Kenza"  />Saadi Kenza</a></div></li>
+<li class="listentry"><div class="user"><a href="http://moodle.insa-lyon.fr/user/view.php?id=17170&amp;course=1" title="GMD (5 min)"><img class="userpicture f2" src="https://planete.insa-lyon.fr/trombine/photos/PC0::+SFVaNFwkPGrobaIcLdM3SibynLhAtQRgiH1XKF1SIh4yytgYWRUPg==" height="16" width="12" alt="Avatar Chamsidine Raissa"  />Chamsidine Raissa</a></div></li>
+<li class="listentry"><div class="user"><img class="userpicture f2" src="" height="16" width="12" alt=""  />Visiteur anonyme</div></li>
+</ul><div class="clearer"><!-- --></div></div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst7","Afficher bloc Utilisateurs en ligne","Cacher bloc Utilisateurs en ligne");
+//]]>
+</script><span id="sb-5" class="skip-block-to"></span><a href="#sb-6" class="skip-block">Sauter Calendrier</a><div  id="inst4" class="block_calendar_month sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst4" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Calendrier', 'Cacher bloc Calendrier'); return false;" alt="Cacher bloc Calendrier" title="Cacher bloc Calendrier" class="hide-show-image" /><h2>Calendrier</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content"><div id="overDiv" style="position: absolute; visibility: hidden; z-index:1000;"></div><script type="text/javascript" src="http://moodle.insa-lyon.fr/calendar/overlib.cfg.php"></script>
+<div class="calendar-controls"><a class="previous" href="index.php?cal_m=3&amp;cal_y=2015" title="Mois précédent"><span class="arrow ">&#x25C4;</span><span class="accesshide " >&nbsp;Mois précédent</span></a><span class="hide"> | </span><span class="current"><a href="http://moodle.insa-lyon.fr/calendar/view.php?view=month&amp;course=1&amp;cal_d=1&amp;cal_m=4&amp;cal_y=2015">avril 2015</a></span><span class="hide"> | </span><a class="next" href="index.php?cal_m=5&amp;cal_y=2015" title="Mois suivant"><span class="accesshide " >Mois suivant&nbsp;</span><span class="arrow ">&#x25BA;</span></a>
+<span class="clearer"><!-- --></span></div>
+<table class="minicalendar" summary="Données en tableau, Calendrier avril 2015"><tr class="weekdays"><th scope="col"><abbr title="Dimanche">Di</abbr></th>
+<th scope="col"><abbr title="Lundi">Lu</abbr></th>
+<th scope="col"><abbr title="Mardi">Ma</abbr></th>
+<th scope="col"><abbr title="Mercredi">Me</abbr></th>
+<th scope="col"><abbr title="Jeudi">Je</abbr></th>
+<th scope="col"><abbr title="Vendredi">Ve</abbr></th>
+<th scope="col"><abbr title="Samedi">Sa</abbr></th>
+</tr><tr><td class="dayblank">&nbsp;</td>
+<td class="dayblank">&nbsp;</td>
+<td class="dayblank">&nbsp;</td>
+<td class="day">1</td>
+<td class="day">2</td>
+<td class="day event_course event_course"><a href="http://moodle.insa-lyon.fr/calendar/view.php?view=day&amp;cal_d=3&amp;cal_m=4&amp;cal_y=2015" onmouseover="return overlib('&lt;div&gt;&lt;img class=&quot;icon&quot; src=&quot;http://moodle.insa-lyon.fr/theme/insa_sc/pix/mod/quiz/icon.gif&quot; alt=&quot;quiz&quot; /&gt;&lt;a href=&quot;http://moodle.insa-lyon.fr/calendar/view.php?view=day&amp;amp;cal_d=3&amp;amp;cal_m=4&amp;amp;cal_y=2015#event_5625&quot;&gt;QCM5: MSP430 et ABI (Le QCM est disponible)&lt;/a&gt;&lt;/div&gt;', CAPTION, 'Événements du vendredi 3 avril');" onmouseout="return nd();">3</a></td>
+<td class="weekend day">4</td>
+</tr><tr><td class="weekend day">5</td>
+<td class="day">6</td>
+<td class="day today eventnone"><span class="accesshide " >Aujourd'hui mardi 7 avril </span><a href="#" onmouseover="return overlib('Pas d\'événement', CAPTION, 'Aujourd\'hui mardi 7 avril');" onmouseout="return nd();">7</a></td>
+<td class="day">8</td>
+<td class="day">9</td>
+<td class="day">10</td>
+<td class="weekend day">11</td>
+</tr><tr><td class="weekend day event_course event_course"><a href="http://moodle.insa-lyon.fr/calendar/view.php?view=day&amp;cal_d=12&amp;cal_m=4&amp;cal_y=2015" onmouseover="return overlib('&lt;div&gt;&lt;img class=&quot;icon&quot; src=&quot;http://moodle.insa-lyon.fr/theme/insa_sc/pix/mod/quiz/icon.gif&quot; alt=&quot;quiz&quot; /&gt;&lt;a href=&quot;http://moodle.insa-lyon.fr/calendar/view.php?view=day&amp;amp;cal_d=12&amp;amp;cal_m=4&amp;amp;cal_y=2015#event_5626&quot;&gt;QCM5: MSP430 et ABI (QCM est fermé)&lt;/a&gt;&lt;/div&gt;', CAPTION, 'Événements du dimanche  12 avril');" onmouseout="return nd();">12</a></td>
+<td class="day">13</td>
+<td class="day">14</td>
+<td class="day">15</td>
+<td class="day">16</td>
+<td class="day">17</td>
+<td class="weekend day">18</td>
+</tr><tr><td class="weekend day">19</td>
+<td class="day">20</td>
+<td class="day">21</td>
+<td class="day">22</td>
+<td class="day">23</td>
+<td class="day">24</td>
+<td class="weekend day">25</td>
+</tr><tr><td class="weekend day">26</td>
+<td class="day">27</td>
+<td class="day">28</td>
+<td class="day">29</td>
+<td class="day">30</td>
+<td class="dayblank">&nbsp;</td><td class="dayblank">&nbsp;</td></tr></table></div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst4","Afficher bloc Calendrier","Cacher bloc Calendrier");
+//]]>
+</script><span id="sb-6" class="skip-block-to"></span><a href="#sb-7" class="skip-block">Sauter Médiathèque</a><div  id="inst17631" class="block_inwicast sideblock"><div class="wrap">
+<div class="header"><div class="bt"><div>&nbsp;</div></div><div class="i1"><div class="i2"><div class="i3"><div class="title"><input type="image" src="http://moodle.insa-lyon.fr/theme/insa_sc/pix/t/switch_minus.gif" id="togglehide_inst17631" onclick="elementToggleHide(this, true, function(el) {return findParentNode(el, 'DIV', 'sideblock'); }, 'Afficher bloc Médiathèque', 'Cacher bloc Médiathèque'); return false;" alt="Cacher bloc Médiathèque" title="Cacher bloc Médiathèque" class="hide-show-image" /><h2>Médiathèque</h2></div></div></div></div></div><div class="i1"><div class="i2"><div class="i3"><div class="content">
+<ul class='list'>
+<li class="r0"><div class="column c1"><img src="http://moodle.insa-lyon.fr/blocks/inwicast/images/icon.gif" class="icon" alt="" /><a title="Vidéos du cours" href="http://moodle.insa-lyon.fr/blocks/inwicast/index.php?id=1">Vidéos du cours</a></div></li>
+</ul>
+</div></div></div></div><div class="bb"><div>&nbsp;</div></div></div></div><script type="text/javascript">
+//<![CDATA[
+elementCookieHide("inst17631","Afficher bloc Médiathèque","Cacher bloc Médiathèque");
+//]]>
+</script><span id="sb-7" class="skip-block-to"></span></div></div></div>
+<div class="bb"><div>&nbsp;</div></div>
+</div></td>
+  </tr>
+</table>
+
+</div></div></div>
+<div id="content-bb" class="bb"><div>&nbsp;</div></div>
+</div><!-- end container Content -->
+<!-- START OF FOOTER -->
+<div id="footer"><p class="helplink"></p><div class="logininfo">Connecté sous le nom « <a  href="http://moodle.insa-lyon.fr/user/view.php?id=25455&amp;course=1">Bayart Quentin</a> »  (<a  href="http://moodle.insa-lyon.fr/login/logout.php?sesskey=Xk9v9WRjmc">Déconnexion</a>)</div><div class="sitelink"><a title="Moodle" href="http://moodle.org/"><img style="width:100px;height:30px" src="pix/moodlelogo.gif" alt="moodlelogo" /></a></div></div></div> <!-- end page div -->
+<script type="text/javascript">
+/* <![CDATA[ */
+    script.init();
+/* ]]> */
+</script>
+</body>
+</html>

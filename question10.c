@@ -23,14 +23,14 @@ pthread_mutex_t lockScreen;
 const int MAX_FACTORS=64;
 
 
-				/************************
-				 * 		ARBRE Q10 		*
-				 * *********************/
+					/************************
+					 * 		  ARBRE  		*
+					 ***********************/
 
 typedef struct node
 {
-    uint64_t key;
-    uint64_t * factorsTree;
+    uint64_t key; //n
+    uint64_t * factorsTree; //Tableau des facteurs premiers de n
     struct node *left;
     struct node *right;
 } node ;
@@ -50,6 +50,9 @@ int get_prime_factors(uint64_t n,uint64_t*  dest);
 void addNode (node** tree, node* unNoeud);
 
 uint64_t * searchNode (uint64_t uneCle);
+
+void displayTree (node* tree);
+
 /*--------------------------------------------METHODES-----------------------------------------*/
 
 void* thread_prime_factors(void * u)
@@ -164,51 +167,62 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 	return -1;
 }
 
+						/************************
+						 * 		  ARBRE  		*
+						 ***********************/
+
 void addNode (node** tree, node* unNoeud)
 {
+	printf("Appel de addNode !\n");
 	node *previous=NULL;
 	node *current=*tree;
+	
 	
 	if (current==NULL)
 	{
 		//Arbre vide
-		current=unNoeud;
-		return;
+		printf("Ajout d'un nouveau noeud !\n");
+		*tree=unNoeud;
+	}
+	else
+	{
+		while(current != NULL)
+		{
+			//Tant qu'on n'a pas atteint une feuille
+			previous=current;
+			
+			if(unNoeud->key < current->key)
+			{
+				//On se déplace à gauche
+				current=current->left;
+				if ( current== NULL )
+				{
+					printf("Ajout d'un nouveau noeud !\n");
+					//On ajoute le nouveau noeud
+					previous->left=unNoeud;
+					break;
+				}
+			}
+			else if (unNoeud->key > current->key)
+			{
+				//On doit se déplacer sur la branche droite
+				current=current->right;
+				if ( current== NULL )
+				{
+					printf("Ajout d'un nouveau noeud !\n");
+					//On ajoute le nouveau noeud
+					previous->right=unNoeud;
+					break;
+				}
+			}
+			else
+			{
+				//La valeur est déjà dans l'arbre
+				break;
+			}
+		}
 	}
 	
-	while(1)
-	{
-		//Tant qu'on n'a pas atteind une feuille
-		previous=current;
-		
-		if(unNoeud->key < current->key)
-		{
-			//On se déplace à gauche
-			current=current->left;
-			if ( current== NULL )
-			{
-				//On ajoute le nouveau noeud
-				previous->left=unNoeud;
-				return;
-			}
-		}
-		else if (unNoeud->key > current->key)
-		{
-			//On doit se déplacer sur la branche droite
-			current=current->right;
-			if ( current== NULL )
-			{
-				//On ajoute le nouveau noeud
-				previous->right=unNoeud;
-				return;
-			}
-		}
-		else
-		{
-			//La valeur est déjà dans l'arbre
-			return;
-		}
-	}
 }
 
 uint64_t * searchNode (uint64_t uneCle)
@@ -221,9 +235,9 @@ uint64_t * searchNode (uint64_t uneCle)
 		return NULL;
 	}
 	
-	while(1)
+	while(current != NULL)
 	{
-
+		printf("current->key : %ju\n", current->key);
 		if(uneCle < current->key)
 		{
 			//On se déplace à gauche
@@ -248,6 +262,24 @@ uint64_t * searchNode (uint64_t uneCle)
 			return current->factorsTree;
 		}
 	}
+	return NULL;
+}
+
+void displayTree (node* tree)
+// Algo : Parcours de l'arbre en utilisant une fonction récursive, et en commencant
+// par les valeurs plus petites (gauche).
+{
+	//Arbre vide
+	printf("Appel de displayTree !\n");
+    if(tree==NULL) return;
+
+    //On commence par les valeurs les plus petites
+    if(tree->left)  displayTree(tree->left);
+
+    printf("key : %ju;\n", tree->key);
+
+    //On affiche ensuite les valeurs plus grandes
+    if(tree->right) displayTree(tree->right);
 }
 
 int main(void)
@@ -314,13 +346,14 @@ int main(void)
 	
 	addNode(&arbre, noeud3);
 	
-	uint64_t * res = searchNode((uint64_t)10);
+	displayTree(arbre);
+	//uint64_t * res = searchNode((uint64_t)10);
 	
-	if(res[0]!=NULL)
+	/*if(res[0]!=NULL)
 	{
 		printf("%ju",res[0]);
 	}
-	else printf("problème..");
+	else printf("problème..");*/
 	
 
     return 0;
