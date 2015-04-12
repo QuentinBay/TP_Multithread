@@ -60,9 +60,24 @@ run1: question1
 run2: question2
 	time ./question2
 
+run3: question3
+	time ./question3
+
+run5: question5
+	time ./question5
+
+run7: question7
+	time ./question7
+
+run8: question8
+	time ./question8
+
+run10: question10
+	time ./question10
+
 #########################
 ## utilities
 
 clean:
-	rm -f question1 question2 question10 tiny.txt small.txt medium.txt large.txt many.txt 
+	rm -f question1 question2 question3 question5 question7 question8 question10 tiny.txt small.txt medium.txt large.txt many.txt 
 
