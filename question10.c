@@ -23,14 +23,14 @@ pthread_mutex_t lockScreen;
 const int MAX_FACTORS=64;
 
 
-					/************************
-					 * 		  ARBRE  		*
-					 ***********************/
+	/***************************
+	 * ATTRIBUTS ARBRE BINAIRE *
+	 **************************/
 
 typedef struct node
 {
     uint64_t key; //n
-    uint64_t * factorsTree; //Tableau des facteurs premiers de n
+    uint64_t * factorsTree; //Tableau des facteurs premiers de n /!\Nombre de facteurs premiers dans la case 0.
     struct node *left;
     struct node *right;
 } node ;
@@ -47,7 +47,7 @@ void print_prime_factors(uint64_t n);
 
 int get_prime_factors(uint64_t n,uint64_t*  dest);
 
-void addNode (node** tree, node* unNoeud);
+void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs);
 
 uint64_t * searchNode (uint64_t uneCle);
 
@@ -101,9 +101,9 @@ void print_prime_factors(uint64_t n)
 
 int get_prime_factors(uint64_t n,uint64_t*  dest)
 {
-					/*****************************
-					*  		INITIALISATION		 *
-					*****************************/
+		/*****************************
+		*  		INITIALISATION		 *
+		*****************************/
 	//Garder le nombre de facteurs premiers que l'on rentre dans le tableau
 	int compteur=0;
 	
@@ -167,21 +167,31 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 	return -1;
 }
 
-						/************************
-						 * 		  ARBRE  		*
-						 ***********************/
+							/**************************
+							 * METHODES ARBRE BINAIRE *
+							 *************************/
 
-void addNode (node** tree, node* unNoeud)
+void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs)
 {
+			/*****************************
+			*  		INITIALISATION		 *
+			*****************************/
 	printf("Appel de addNode !\n");
 	node *previous=NULL;
 	node *current=*tree;
 	
-	
+	node * unNoeud=(node*)malloc(sizeof(node));
+	unNoeud->key=unNombre;
+	unNoeud->factorsTree=fateurs;
+	unNoeud->left=NULL;
+	unNoeud->right=NULL;
+
+	/*******************************************
+	* REHCERHCHE DE LA POSITION DU FUTUR NOEUD *
+	*******************************************/	
 	if (current==NULL)
 	{
 		//Arbre vide
-		printf("Ajout d'un nouveau noeud !\n");
 		*tree=unNoeud;
 	}
 	else
@@ -197,7 +207,6 @@ void addNode (node** tree, node* unNoeud)
 				current=current->left;
 				if ( current== NULL )
 				{
-					printf("Ajout d'un nouveau noeud !\n");
 					//On ajoute le nouveau noeud
 					previous->left=unNoeud;
 					break;
@@ -209,7 +218,6 @@ void addNode (node** tree, node* unNoeud)
 				current=current->right;
 				if ( current== NULL )
 				{
-					printf("Ajout d'un nouveau noeud !\n");
 					//On ajoute le nouveau noeud
 					previous->right=unNoeud;
 					break;
@@ -259,6 +267,7 @@ uint64_t * searchNode (uint64_t uneCle)
 		else
 		{
 			//On a trouvé la valeur
+
 			return current->factorsTree;
 		}
 	}
@@ -274,13 +283,15 @@ void displayTree (node* tree)
     if(tree==NULL) return;
 
     //On commence par les valeurs les plus petites
-    if(tree->left)  displayTree(tree->left);
+    if(tree->left!=NULL)  displayTree(tree->left);
 
     printf("key : %ju;\n", tree->key);
 
     //On affiche ensuite les valeurs plus grandes
-    if(tree->right) displayTree(tree->right);
+    if(tree->right!=NULL) displayTree(tree->right);
 }
+
+
 
 int main(void)
 {
@@ -322,38 +333,19 @@ int main(void)
 	t3[0]=2;
 	t3[1]=5;
 	
-	node * noeud1=(node*)malloc(sizeof(node));
-	noeud1->key=5;
-	noeud1->factorsTree=t1;
-	noeud1->left=NULL;
-	noeud1->right=NULL;
-	
-	addNode(&arbre, noeud1);
-	
-	node * noeud2=(node*)malloc(sizeof(node));
-	noeud2->key=3;
-	noeud2->factorsTree=t2;
-	noeud2->left=NULL;
-	noeud2->right=NULL;
-	
-	addNode(&arbre, noeud2);
-	
-	node * noeud3=(node*)malloc(sizeof(node));
-	noeud3->key=10;
-	noeud3->factorsTree=t3;
-	noeud3->left=NULL;
-	noeud3->right=NULL;
-	
-	addNode(&arbre, noeud3);
+	addNode(&arbre, 5, t1);
+	addNode(&arbre, 3, t2);
+	addNode(&arbre, 10, t3);
+
 	
 	displayTree(arbre);
-	//uint64_t * res = searchNode((uint64_t)10);
-	
-	/*if(res[0]!=NULL)
+	uint64_t * res = searchNode((uint64_t)10);
+
+	if(res[0]!=NULL)
 	{
 		printf("%ju",res[0]);
 	}
-	else printf("problème..");*/
+	else printf("problème..");
 	
 
     return 0;
