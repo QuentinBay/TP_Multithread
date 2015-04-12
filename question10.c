@@ -53,6 +53,8 @@ uint64_t * searchNode (uint64_t uneCle);
 
 void displayTree (node* tree);
 
+void clearTree(node** tree);
+
 /*--------------------------------------------METHODES-----------------------------------------*/
 
 void* thread_prime_factors(void * u)
@@ -172,6 +174,7 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 							 *************************/
 
 void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs)
+// Algo : Cree un noeud et l'ajoute dans l'arbre binaire.
 {
 			/*****************************
 			*  		INITIALISATION		 *
@@ -280,7 +283,11 @@ void displayTree (node* tree)
 {
 	//Arbre vide
 	printf("Appel de displayTree !\n");
-    if(tree==NULL) return;
+    if(tree==NULL)
+    {
+    	printf("Arbre vide !\n");
+    	return;
+    }
 
     //On commence par les valeurs les plus petites
     if(tree->left!=NULL)  displayTree(tree->left);
@@ -291,7 +298,23 @@ void displayTree (node* tree)
     if(tree->right!=NULL) displayTree(tree->right);
 }
 
+void clearTree(node** tree)
+// Algo : Parcours de l'arbre, destruction de tous les noeuds que l'on a cree
+// avec un appel recursif a la fonction
+{
+	node * current = *tree;
 
+	//Arbre deja vide
+	if (current==NULL) return;
+
+	//Descendons aux feuilles de l'arbre
+	if(current->left!=NULL) clearTree(&current->left);
+	if(current->right!=NULL) clearTree(&current->right);
+
+	//On a atteint une feuille, detruisons la !
+	free(current);
+	*tree=NULL;
+}
 
 int main(void)
 {
@@ -347,7 +370,9 @@ int main(void)
 	}
 	else printf("problème..");
 	
-
+	//Liberons la memoire !
+	clearTree(&arbre);
+	displayTree(arbre);
     return 0;
 }
 
