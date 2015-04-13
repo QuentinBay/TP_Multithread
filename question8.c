@@ -158,7 +158,7 @@ int main(void)
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
 	pthread_create(&thread0, NULL, thread_prime_factors, NULL);
-	pthread_create(&thread1, NULL, thread_prime_factors, NULL);
+	//pthread_create(&thread1, NULL, thread_prime_factors, NULL);
 
 	
 
