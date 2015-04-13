@@ -14,10 +14,10 @@ pthread_t thread0;
 pthread_t thread1;
 
 //Gérer l'accès critique au file
-pthread_mutex_t lockFile;
+pthread_mutex_t lockFile = PTHREAD_MUTEX_INITIALIZER;
 
 //Gérer l'accès critique au screen
-pthread_mutex_t lockScreen;
+pthread_mutex_t lockScreen = PTHREAD_MUTEX_INITIALIZER;
 
 //On code les nombres sur 64 bits donc au pire 64 facteurs (2^0*2¹...)
 const int MAX_FACTORS=64;
@@ -29,7 +29,7 @@ typedef struct node
 {
     uint64_t key; //n
     uint64_t nbFactors; //Nombre de facteurs premiers
-    uint64_t * factorsTree; //Tableau des facteurs premiers de n.
+    uint64_t *factorsTree; //Tableau des facteurs premiers de n.
     struct node *left;
     struct node *right;
 } node ;
@@ -37,7 +37,7 @@ typedef struct node
  node *arbre = NULL;
  
  //Gérer l'accès critique à l'arbre
-pthread_mutex_t lockTree;
+pthread_mutex_t lockTree = PTHREAD_MUTEX_INITIALIZER;
 
 /*--------------------------------------DECLARATION METHODES------------------------------------*/
 void* thread_prime_factors(void * u);
@@ -84,10 +84,14 @@ void print_prime_factors(uint64_t n)
 // affiche la liste des facteurs premiers de n, et rend le jeton de l'ecran.
 {
 	uint64_t * resTab;
+	
 	int j,nbPremiers;
 
 	//Verfions que l'on a pas deja fait le calcul!
+	pthread_mutex_lock(&lockTree);
 	node * noeudCalcule=searchNode(n);
+	pthread_mutex_unlock(&lockTree);
+
 	if (noeudCalcule!=NULL)
 	{
 		// n a deja ete calcule avant
@@ -108,7 +112,10 @@ void print_prime_factors(uint64_t n)
 		resTab=factors;
 
 		//Gardons en memoire ce calcul !
+		pthread_mutex_lock(&lockTree);
 		addNode(&arbre, n, nbPremiers, resTab);
+		pthread_mutex_unlock(&lockTree);
+		//printf("arbre->factorsTree : %ju\n",arbre->factorsTree[0]);
 	}
 	
 	//Affichage du resultat
@@ -127,19 +134,35 @@ void print_prime_factors(uint64_t n)
 int get_prime_factors(uint64_t n,uint64_t*  dest)
 //
 {
-		/*****************************
-		*  		INITIALISATION		 *
-		*****************************/
+				/*****************
+				* INITIALISATION *
+				*****************/
 	//Garder le nombre de facteurs premiers que l'on rentre dans le tableau
 	int compteur=0;
-	
+
 	//On divise n par 2 jusqu'à ce qu'il ne soit plus divisible par 2
 	while ( n%2 == 0)
 	{
 		n=n/2;
 		dest[compteur]=(uint64_t)2;
 		compteur++;
-		
+		//Verfions que l'on a pas deja fait le calcul!
+		pthread_mutex_lock(&lockTree);
+		node * noeudCalcule=searchNode(n);
+		pthread_mutex_unlock(&lockTree);
+
+		if (noeudCalcule!=NULL)
+		{
+			// Trouve !
+			//uint64_t * tmp = *noeudCalcule->factorsTree;
+			int l;
+			for (l = 0; l < noeudCalcule->nbFactors; ++l)
+			{
+				dest[compteur]=noeudCalcule->factorsTree[l];
+				compteur++;
+			}
+			return compteur;
+		}
 	}
 
 	if ( n == 1 )
@@ -149,9 +172,9 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		return compteur;
 	}
 
-		/***************************************************
-		*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
-		****************************************************/
+		/***************************************
+		* RECHERCHE DES FACTEURS PREMIERS DE N *
+		***************************************/
 	uint64_t i, j;
 	i=3;
 	while(n!=1 && i <= n)
@@ -179,6 +202,23 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 						}
 						else
 						{
+							//Verfions que l'on a pas deja fait le calcul!
+							pthread_mutex_lock(&lockTree);
+							node * noeudCalcule=searchNode(n);
+							pthread_mutex_unlock(&lockTree);
+							if (noeudCalcule!=NULL)
+							{
+								// Trouve !
+								//uint64_t * tmp = *noeudCalcule->factorsTree;
+								int l;
+								for (l = 0; l < noeudCalcule->nbFactors; ++l)
+								{
+									dest[compteur]=noeudCalcule->factorsTree[l];
+									compteur++;
+								}
+								return compteur;
+							}
+
 							//On recommence à chercher un facteur premier
 							i=1;
 						}
@@ -196,20 +236,28 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 
 //////////////////////////////////////////////////////////////////////// METHODES ARBRE BINAIRE 
 
-void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t * fateurs)
+void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t * facteurs)
 // Algo : Cree un noeud, parcours l'arbre et ajoute le noeud.
 {
 			/*****************************
 			*  		INITIALISATION		 *
 			*****************************/
-	printf("Appel de addNode !\n");
+	printf("Appel de addNode avec : %ju !\n", facteurs[0]);
 	node *previous=NULL;
 	node *current=*tree;
 	
 	node * unNoeud=(node*)malloc(sizeof(node));
 	unNoeud->key=unNombre;
 	unNoeud->nbFactors=unNbFacteurs;
-	unNoeud->factorsTree=fateurs;
+	// Allouons un espace memoire pour stocker les valeurs du tableau sinon elles seront perdus lors
+	// du changement de contexte de print_prime_factors
+	unNoeud->factorsTree=(uint64_t*)malloc(sizeof(facteurs));
+	int i;
+	for (i = 0; i < unNbFacteurs; ++i)
+	{
+		unNoeud->factorsTree[i]=facteurs[i];
+	}
+	
 	unNoeud->left=NULL;
 	unNoeud->right=NULL;
 
@@ -272,7 +320,6 @@ node * searchNode (uint64_t uneCle)
 	
 	while(current != NULL)
 	{
-		printf("current->key : %ju\n", current->key);
 		if(uneCle < current->key)
 		{
 			//On se déplace à gauche
@@ -294,6 +341,13 @@ node * searchNode (uint64_t uneCle)
 		else
 		{
 			//On a trouve le noeud correspondant
+			printf("current->key : %ju\n", current->key);
+			int l;
+			for (l = 0; l < current->nbFactors; ++l)
+			{
+				printf("current->factorsTree : %ju\t",current->factorsTree[l]);
+			}
+			printf("\n");
 			return current;
 		}
 	}
@@ -335,15 +389,16 @@ void clearTree(node** tree)
 	if(current->right!=NULL) clearTree(&current->right);
 
 	//On a atteint une feuille, detruisons la !
+	free(current->factorsTree);
 	free(current);
 	*tree=NULL;
 }
 
 int main(void)
 {
-	/*file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("fileQuestion4.txt","r");
 	
-	if (pthread_mutex_init(&lock, NULL) != 0)
+	/*if (pthread_mutex_init(&lockFile, NULL) != 0)
     {
 	   printf("\n mutex file init failed\n");
        return 1;
@@ -355,21 +410,28 @@ int main(void)
        return 1;
     }
 
+    if (pthread_mutex_init(&lockTree, NULL) != 0)
+    {
+	   printf("\n mutex tree init failed\n");
+       return 1;
+    }*/
+
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
 	pthread_create(&thread0, NULL, thread_prime_factors, NULL);
-	pthread_create(&thread1, NULL, thread_prime_factors, NULL);
+	//pthread_create(&thread1, NULL, thread_prime_factors, NULL);
 
 	
 
 	//Wait for the thread0 to be done
 	pthread_join(thread0, NULL);
-	pthread_join(thread1, NULL);
+	//pthread_join(thread1, NULL);
 
 
-	pthread_mutex_destroy(&lock);
-	pthread_mutex_destroy(&lockScreen);*/
-	uint64_t t1[1];
+	pthread_mutex_destroy(&lockTree);
+	pthread_mutex_destroy(&lockFile);
+	pthread_mutex_destroy(&lockScreen);
+	/*uint64_t t1[1];
 	t1[0]=5;
 	
 	uint64_t t2[1];
@@ -391,9 +453,10 @@ int main(void)
 	{
 		printf("%ju",res->factorsTree[0]);
 	}
-	else printf("problème..");
-	
+	else printf("problème..");*/
+	displayTree(arbre);
 	//Liberons la memoire !
+	printf("DESTRUCTION DE L'ARBRE !\n");
 	clearTree(&arbre);
 	displayTree(arbre);
     return 0;

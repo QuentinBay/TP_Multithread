@@ -53,7 +53,7 @@ void print_prime_factors(uint64_t n)
 	int j,k;
 	k=get_prime_factors(n,factors);
 	
-	pthread_mutex_lock(&lock);
+	pthread_mutex_lock(&lockScreen);
 	
 	if (k ==-1)
 	{
@@ -67,7 +67,7 @@ void print_prime_factors(uint64_t n)
 	}
 	printf("\n");
 	
-	pthread_mutex_unlock(&lock);
+	pthread_mutex_unlock(&lockScreen);
 }
 
 int get_prime_factors(uint64_t n,uint64_t*  dest)
