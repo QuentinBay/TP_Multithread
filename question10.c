@@ -14,7 +14,7 @@ pthread_t thread0;
 pthread_t thread1;
 
 //Gérer l'accès critique au file
-pthread_mutex_t lock;
+pthread_mutex_t lockFile;
 
 //Gérer l'accès critique au screen
 pthread_mutex_t lockScreen;
@@ -23,14 +23,13 @@ pthread_mutex_t lockScreen;
 const int MAX_FACTORS=64;
 
 
-	/***************************
-	 * ATTRIBUTS ARBRE BINAIRE *
-	 **************************/
+////////////////////////////////////////////////////////////////////////// ATTRIBUTS ARBRE BINAIRE
 
 typedef struct node
 {
     uint64_t key; //n
-    uint64_t * factorsTree; //Tableau des facteurs premiers de n /!\Nombre de facteurs premiers dans la case 0.
+    uint64_t nbFactors; //Nombre de facteurs premiers
+    uint64_t * factorsTree; //Tableau des facteurs premiers de n.
     struct node *left;
     struct node *right;
 } node ;
@@ -47,9 +46,9 @@ void print_prime_factors(uint64_t n);
 
 int get_prime_factors(uint64_t n,uint64_t*  dest);
 
-void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs);
+void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t * fateurs);
 
-uint64_t * searchNode (uint64_t uneCle);
+node * searchNode (uint64_t uneCle);
 
 void displayTree (node* tree);
 
@@ -58,50 +57,75 @@ void clearTree(node** tree);
 /*--------------------------------------------METHODES-----------------------------------------*/
 
 void* thread_prime_factors(void * u)
+// Algo : Prend le jeton d'acces au fichier, lit une ligne, rend le jeton 
+// et appelle "print_prime_factors" avec le nombre lu sur le fichier.
 {
 	
-	pthread_mutex_lock(&lock);
+	pthread_mutex_lock(&lockFile);
 	
 	while ( fgets(str, 60, file)!=NULL )
 	{
 		nb=atol(str);
 		
-		pthread_mutex_unlock(&lock);
+		pthread_mutex_unlock(&lockFile);
 	
 		print_prime_factors(nb);
 	
-		pthread_mutex_lock(&lock);
+		pthread_mutex_lock(&lockFile);
 	}
 	
-	pthread_mutex_unlock(&lock);
+	pthread_mutex_unlock(&lockFile);
 	
 	return NULL;
 }
 
 void print_prime_factors(uint64_t n)
+// Algo : Appelle "get_prime_factors", prend le jeton pour l'acces a l'ecran,
+// affiche la liste des facteurs premiers de n, et rend le jeton de l'ecran.
 {
-	uint64_t factors[MAX_FACTORS];
-	int j,k;
-	k=get_prime_factors(n,factors);
-	
-	pthread_mutex_lock(&lock);
-	
-	if (k ==-1)
+	uint64_t * resTab;
+	int j,nbPremiers;
+
+	//Verfions que l'on a pas deja fait le calcul!
+	node * noeudCalcule=searchNode(n);
+	if (noeudCalcule!=NULL)
 	{
-		printf("ERROR : fonction get_prime_factors");
-		return;
+		// n a deja ete calcule avant
+		nbPremiers=noeudCalcule->nbFactors;
+		resTab=noeudCalcule->factorsTree;
 	}
-	printf("%ju: ",n);
-	for(j=0; j<k; j++)
+	else
 	{
-		printf("%ju ",factors[j]);
+		// n n'a pas encore ete calcule
+		uint64_t factors[MAX_FACTORS];
+		nbPremiers=get_prime_factors(n,factors);
+
+		if (nbPremiers ==-1)
+		{
+			printf("ERROR : fonction get_prime_factors");
+			return;
+		}
+		resTab=factors;
+
+		//Gardons en memoire ce calcul !
+		addNode(&arbre, n, nbPremiers, resTab);
+	}
+	
+	//Affichage du resultat
+	pthread_mutex_lock(&lockScreen);
+	
+	printf("%ju: ",n);
+	for(j=0; j<nbPremiers; j++)
+	{
+		printf("%ju ",resTab[j]);
 	}
 	printf("\n");
-	
-	pthread_mutex_unlock(&lock);
+
+	pthread_mutex_unlock(&lockScreen);
 }
 
 int get_prime_factors(uint64_t n,uint64_t*  dest)
+//
 {
 		/*****************************
 		*  		INITIALISATION		 *
@@ -125,9 +149,9 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		return compteur;
 	}
 
-			/***************************************************
-			*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
-			****************************************************/
+		/***************************************************
+		*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
+		****************************************************/
 	uint64_t i, j;
 	i=3;
 	while(n!=1 && i <= n)
@@ -169,12 +193,11 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 	return -1;
 }
 
-							/**************************
-							 * METHODES ARBRE BINAIRE *
-							 *************************/
 
-void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs)
-// Algo : Cree un noeud et l'ajoute dans l'arbre binaire.
+//////////////////////////////////////////////////////////////////////// METHODES ARBRE BINAIRE 
+
+void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t * fateurs)
+// Algo : Cree un noeud, parcours l'arbre et ajoute le noeud.
 {
 			/*****************************
 			*  		INITIALISATION		 *
@@ -185,6 +208,7 @@ void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs)
 	
 	node * unNoeud=(node*)malloc(sizeof(node));
 	unNoeud->key=unNombre;
+	unNoeud->nbFactors=unNbFacteurs;
 	unNoeud->factorsTree=fateurs;
 	unNoeud->left=NULL;
 	unNoeud->right=NULL;
@@ -236,7 +260,7 @@ void addNode (node** tree, uint64_t unNombre, uint64_t * fateurs)
 	
 }
 
-uint64_t * searchNode (uint64_t uneCle)
+node * searchNode (uint64_t uneCle)
 {
 	node *current=arbre;
 	
@@ -269,9 +293,8 @@ uint64_t * searchNode (uint64_t uneCle)
 		}
 		else
 		{
-			//On a trouvé la valeur
-
-			return current->factorsTree;
+			//On a trouve le noeud correspondant
+			return current;
 		}
 	}
 	return NULL;
@@ -356,17 +379,17 @@ int main(void)
 	t3[0]=2;
 	t3[1]=5;
 	
-	addNode(&arbre, 5, t1);
-	addNode(&arbre, 3, t2);
-	addNode(&arbre, 10, t3);
+	addNode(&arbre, 5, 1, t1);
+	addNode(&arbre, 3, 1, t2);
+	addNode(&arbre, 10, 2, t3);
 
 	
 	displayTree(arbre);
-	uint64_t * res = searchNode((uint64_t)10);
+	node * res = searchNode((uint64_t)10);
 
-	if(res[0]!=NULL)
+	if(res!=NULL)
 	{
-		printf("%ju",res[0]);
+		printf("%ju",res->factorsTree[0]);
 	}
 	else printf("problème..");
 	
