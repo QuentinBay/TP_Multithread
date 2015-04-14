@@ -48,6 +48,9 @@ question8: question8.c
 	
 question10: question10.c
 	gcc -Wall -pthread -o question10 question10.c -lm
+
+course: course.c
+	gcc -Wall -pthread -o course course.c -lm
 	
 # add your own rules when you create new programs
 
@@ -75,9 +78,12 @@ run8: question8
 run10: question10
 	time ./question10
 
+runCourse: course
+	time ./course
+
 #########################
 ## utilities
 
 clean:
-	rm -f question1 question2 question3 question5 question7 question8 question10 tiny.txt small.txt medium.txt large.txt many.txt 
+	rm -f question1 question2 question3 question5 question7 question8 question10 course tiny.txt small.txt medium.txt large.txt many.txt 
 
