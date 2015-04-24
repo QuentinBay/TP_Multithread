@@ -140,6 +140,7 @@ int get_prime_factors(uint64_t n, uint64_t*  dest)
 				/*****************
 				* INITIALISATION *
 				*****************/
+
 	int compteur=0; //Garde le nombre de facteurs premiers que l'on rentre dans le tableau
 	int prime=1; //Savoir si on a un nombre premier : 1=non, 0=oui
 	uint64_t i,j;
@@ -207,9 +208,38 @@ int get_prime_factors(uint64_t n, uint64_t*  dest)
 		}
 	}
 
+				/***************
+				* TESTS POUR 5 *
+				***************/
+
+
+	while ( n%5 == 0)
+	{
+		n=n/5;
+		dest[compteur]=(uint64_t)5;
+		compteur++;
+		//Verfions que l'on a pas deja fait le calcul!
+		pthread_mutex_lock(&lockTree);
+		node * noeudCalcule=searchNode(n);
+		pthread_mutex_unlock(&lockTree);
+
+		if (noeudCalcule!=NULL)
+		{
+			// Trouve !
+			//uint64_t * tmp = *noeudCalcule->factorsTree;
+			int l;
+			for (l = 0; l < noeudCalcule->nbFactors; ++l)
+			{
+				dest[compteur]=noeudCalcule->factorsTree[l];
+				compteur++;
+			}
+			return compteur;
+		}
+	}
+
 
 		/************************************************************
-		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 5 *
+		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
 		************************************************************/
 
 	for( i=7; (n!=1)&&(i<=n) ; i+=pasI,pasI=(uint64_t)6-pasI )
