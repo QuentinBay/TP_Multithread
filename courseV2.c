@@ -48,8 +48,6 @@ void print_prime_factors(uint64_t n);
 
 int get_prime_factors(uint64_t n,uint64_t*  dest);
 
-int get_prime_factors_sans_tableau(uint64_t n,uint64_t*  dest);
-
 void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t * fateurs);
 
 node * searchNode (uint64_t uneCle);
@@ -73,7 +71,6 @@ void* thread_prime_factors(void * u)
 		
 		pthread_mutex_unlock(&lockFile);
 	
-		print_prime_factors2(nb);
 		print_prime_factors(nb);
 	
 		pthread_mutex_lock(&lockFile);
@@ -87,58 +84,6 @@ void* thread_prime_factors(void * u)
 
 
 void print_prime_factors(uint64_t n)
-// Algo : Appelle "get_prime_factors", prend le jeton pour l'acces a l'ecran,
-// affiche la liste des facteurs premiers de n, et rend le jeton de l'ecran.
-{
-	uint64_t * resTab=NULL;
-	
-	int j,nbPremiers;
-
-	//Verfions que l'on a pas deja fait le calcul!
-	pthread_mutex_lock(&lockTree);
-	node * noeudCalcule=searchNode(n);
-	pthread_mutex_unlock(&lockTree);
-
-	if (noeudCalcule!=NULL)
-	{
-		// n a deja ete calcule avant
-		nbPremiers=noeudCalcule->nbFactors;
-		resTab=noeudCalcule->factorsTree;
-	}
-	else
-	{
-		// n n'a pas encore ete calcule
-		uint64_t factors[MAX_FACTORS];
-		nbPremiers=get_prime_factors_sans_tableau(n,factors);
-
-		if (nbPremiers ==-1)
-		{
-			printf("ERROR : fonction get_prime_factors");
-			return;
-		}
-		resTab=factors;
-
-		//Gardons en memoire ce calcul !
-		pthread_mutex_lock(&lockTree);
-		addNode(&arbre, n, nbPremiers, resTab);
-		pthread_mutex_unlock(&lockTree);
-		//printf("arbre->factorsTree : %ju\n",arbre->factorsTree[0]);
-	}
-	
-	//Affichage du resultat
-	pthread_mutex_lock(&lockScreen);
-	
-	printf("%ju: ",n);
-	for(j=0; j<nbPremiers; j++)
-	{
-		printf("%ju ",resTab[j]);
-	}
-	printf("\n");
-
-	pthread_mutex_unlock(&lockScreen);
-}
-
-void print_prime_factors2(uint64_t n)
 // Algo : Appelle "get_prime_factors", prend le jeton pour l'acces a l'ecran,
 // affiche la liste des facteurs premiers de n, et rend le jeton de l'ecran.
 {
@@ -180,7 +125,7 @@ void print_prime_factors2(uint64_t n)
 	//Affichage du resultat
 	pthread_mutex_lock(&lockScreen);
 	
-	printf("Nouveau %ju: ",n);
+	printf("%ju: ",n);
 	for(j=0; j<nbPremiers; j++)
 	{
 		printf("%ju ",resTab[j]);
@@ -189,6 +134,7 @@ void print_prime_factors2(uint64_t n)
 
 	pthread_mutex_unlock(&lockScreen);
 }
+
 
 int get_prime_factors(uint64_t n,uint64_t*  dest)
 {
@@ -210,23 +156,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		n=n/2;
 		dest[compteur]=(uint64_t)2;
 		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
 	}
 
 				/***************
@@ -239,23 +168,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		n=n/3;
 		dest[compteur]=(uint64_t)3;
 		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
 	}
 
 				/***************
@@ -268,23 +180,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		n=n/5;
 		dest[compteur]=(uint64_t)5;
 		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
 	}
 
 
@@ -302,187 +197,10 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 			n=n/i;
 			dest[compteur]=i;
 			compteur++;
-			
-			if (n==1)
-			{
-				return compteur;
-			}
-			else
-			{
-				//Verfions que l'on a pas deja fait le calcul!
-				pthread_mutex_lock(&lockTree);
-				node * noeudCalcule=searchNode(n);
-				pthread_mutex_unlock(&lockTree);
-				if (noeudCalcule!=NULL)
-				{
-					// Trouve !
-					//uint64_t * tmp = *noeudCalcule->factorsTree;
-					int l;
-					for (l = 0; l < noeudCalcule->nbFactors; ++l)
-					{
-						dest[compteur]=noeudCalcule->factorsTree[l];
-						compteur++;
-					}
-					return compteur;
-				}
-			}
 		}
 			
 	}
-	return compteur;
-}
 
-int get_prime_factors_sans_tableau(uint64_t n,uint64_t*  dest)
-{
-				/*****************
-				* INITIALISATION *
-				*****************/
-
-	int compteur=0; //Garde le nombre de facteurs premiers que l'on rentre dans le tableau
-	int prime=1; //Savoir si on a un nombre premier : 1=non, 0=oui
-	uint64_t i;
-	uint64_t essai;
-	uint64_t pasI=4;
-	uint64_t pasJ=4;
-	//printf("Appel de get_prime_factors\n");
-
-
-				/***************
-				* TESTS POUR 2 *
-				***************/
-	while ( n%2 == 0)
-	{
-		n=n/2;
-		dest[compteur]=(uint64_t)2;
-		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
-	}
-
-				/***************
-				* TESTS POUR 3 *
-				***************/
-
-
-	while ( n%3 == 0)
-	{
-		n=n/3;
-		dest[compteur]=(uint64_t)3;
-		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
-	}
-
-				/***************
-				* TESTS POUR 5 *
-				***************/
-
-
-	while ( n%5 == 0)
-	{
-		n=n/5;
-		dest[compteur]=(uint64_t)5;
-		compteur++;
-		//Verfions que l'on a pas deja fait le calcul!
-		pthread_mutex_lock(&lockTree);
-		node * noeudCalcule=searchNode(n);
-		pthread_mutex_unlock(&lockTree);
-
-		if (noeudCalcule!=NULL)
-		{
-			// Trouve !
-			//uint64_t * tmp = *noeudCalcule->factorsTree;
-			int l;
-			for (l = 0; l < noeudCalcule->nbFactors; ++l)
-			{
-				dest[compteur]=noeudCalcule->factorsTree[l];
-				compteur++;
-			}
-			return compteur;
-		}
-	}
-
-
-		/************************************************************
-		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
-		************************************************************/
-
-	for( i=7; (n!=1)&&(i<=n) ; i+=pasI,pasI=(uint64_t)6-pasI )
-	// On supprime les multiples de 2 et de 3 en incrementant alternativement
-	// i de 4 et de 2
-	{
-		prime=0;
-		pasJ=2;
-		for( essai=5 ; (i%essai)&&(essai*essai<i) ; essai+=pasJ,pasJ=(uint64_t)6-pasJ )
-		// premiers que l'on teste successivement
-		{
-			if(i%essai==0) prime=1;
-		}
-		if(prime==0)
-		{
-			while (n%i==0)
-			{
-				// Tant que i est un facteur premier de n
-				n=n/i;
-				dest[compteur]=i;
-				compteur++;
-				
-				if (n==1)
-				{
-					return compteur;
-				}
-				else
-				{
-					//Verfions que l'on a pas deja fait le calcul!
-					pthread_mutex_lock(&lockTree);
-					node * noeudCalcule=searchNode(n);
-					pthread_mutex_unlock(&lockTree);
-					if (noeudCalcule!=NULL)
-					{
-						// Trouve !
-						//uint64_t * tmp = *noeudCalcule->factorsTree;
-						int l;
-						for (l = 0; l < noeudCalcule->nbFactors; ++l)
-						{
-							dest[compteur]=noeudCalcule->factorsTree[l];
-							compteur++;
-						}
-						return compteur;
-					}
-				}
-			}
-		}	
-	}
 	return compteur;
 }
 
