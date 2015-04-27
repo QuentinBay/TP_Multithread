@@ -17,71 +17,23 @@ void* thread_prime_factors(void * u)
 
 void print_prime_factors(uint64_t n)
 {
-					/*****************************
-					*  		INITIALISATION		 *
-					*****************************/
-	
-
 	printf("%ju : ", n );
 
+	uint64_t i;
 
-	//On divise n par 2 jusqu'à ce qu'il ne soit plus divisible par 2
-	while ( n%2 == 0)
+	for( i=2; n!=1 ; i++ )
 	{
-		n=n/2;
-		printf("%d ", 2);
-	}
-
-	if ( n == 1 )
-	{
-		//On a trouvé tous les facteurs premiers
-		printf("\n");
-		return;
-	}
-
-			/***************************************************
-			*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
-			****************************************************/
-	uint64_t i, j;
-	i=3;
-	while(n!=1 && i <= n)
-	{
-		//printf("Boucle 1 :%ju\n", i);
-		//Vérifions s'il s'agit d'un nombre premier
-		for (j = 2; j <= i; j++)
+		while (n%i==0)
 		{
-			//printf("Boucle 2 :%ju\n", j);
-			if (i%j==0)
-			{
-				if (i==j)
-				{
-					//i est divisible par j et i = j donc c'est un nombre premier
-					if (n%i==0)
-					{
-						//i est un facteur premier de n
-						n=n/i;
-						printf("%ju ", i);
-						if (n==1)
-						{
-							//On a fini !
-							printf("\n");
-							return;
-						}
-						else
-						{
-							//On recommence à chercher un facteur premier
-							i=1;
-						}
-						
-					}
-				}
-				break;
-			}
+			// Tant que i est un facteur premier de n
+			n=n/i;
+			printf("%ju ", i);
 		}
-		i+=2;
 	}
+	//On a fini !
+	printf("\n");
 
-
+	return;
 }
 
 
@@ -90,7 +42,7 @@ int main(void)
 	uint64_t nb;
 	uint64_t nb2;
 	FILE * file;
-	file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("fileQuestion3.txt","r");
 	char str[60];
 	char str2[60];
 	pthread_t thread0;

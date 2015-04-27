@@ -87,7 +87,7 @@ void print_prime_factors(uint64_t n)
 // Algo : Appelle "get_prime_factors", prend le jeton pour l'acces a l'ecran,
 // affiche la liste des facteurs premiers de n, et rend le jeton de l'ecran.
 {
-	uint64_t * resTab=NULL;
+	uint64_t * resTab = NULL;
 	
 	int j,nbPremiers;
 
@@ -107,19 +107,12 @@ void print_prime_factors(uint64_t n)
 		// n n'a pas encore ete calcule
 		uint64_t factors[MAX_FACTORS];
 		nbPremiers=get_prime_factors(n,factors);
-
-		if (nbPremiers ==-1)
-		{
-			printf("ERROR : fonction get_prime_factors");
-			return;
-		}
 		resTab=factors;
 
 		//Gardons en memoire ce calcul !
 		pthread_mutex_lock(&lockTree);
 		addNode(&arbre, n, nbPremiers, resTab);
 		pthread_mutex_unlock(&lockTree);
-		//printf("arbre->factorsTree : %ju\n",arbre->factorsTree[0]);
 	}
 	
 	//Affichage du resultat
@@ -204,7 +197,6 @@ void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t *
 				/*****************************
 				*  		INITIALISATION		 *
 				*****************************/
-	//printf("Appel de addNode avec : %ju !\n", unNombre);
 	node *previous=NULL;
 	node *current=*tree;
 
@@ -355,20 +347,15 @@ int main(void)
 
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
-	//pthread_create(&thread0, NULL, thread_prime_factors, NULL);
+	pthread_create(&thread0, NULL, thread_prime_factors, NULL);
 	//pthread_create(&thread1, NULL, thread_prime_factors, NULL);
 
 	
 
 	//Wait for the thread0 and the thread1 to be done
-	//pthread_join(thread0, NULL);
+	pthread_join(thread0, NULL);
 	//pthread_join(thread1, NULL);
 
-	while ( fgets(str, 60, file)!=NULL )
-	{
-		nb=atol(str);
-		print_prime_factors(nb);
-	}
 
 	pthread_mutex_destroy(&lockTree);
 	pthread_mutex_destroy(&lockFile);
@@ -376,9 +363,7 @@ int main(void)
 	
 
 	//Liberons la memoire !
-	printf("DESTRUCTION DE L'ARBRE :\n");
 	clearTree(&arbre);
-	displayTree(arbre);
     return 0;
 }
 
