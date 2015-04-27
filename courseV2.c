@@ -141,11 +141,9 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 				/*****************
 				* INITIALISATION *
 				*****************/
-
 	int compteur=0; //Garde le nombre de facteurs premiers que l'on rentre dans le tableau
 	uint64_t i;
 	uint64_t pasI=4;
-	//printf("Appel de get_prime_factors\n");
 
 
 				/***************
@@ -161,8 +159,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 				/***************
 				* TESTS POUR 3 *
 				***************/
-
-
 	while ( n%3 == 0)
 	{
 		n=n/3;
@@ -173,8 +169,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 				/***************
 				* TESTS POUR 5 *
 				***************/
-
-
 	while ( n%5 == 0)
 	{
 		n=n/5;
@@ -186,8 +180,7 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		/************************************************************
 		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
 		************************************************************/
-
-	for( i=7; (n!=1)&&(i<=n) ; i+=pasI,pasI=(uint64_t)6-pasI )
+	for( i=7; n!=1 ; i+=pasI, pasI=6-pasI )
 	// On supprime les multiples de 2 et de 3 en incrementant alternativement
 	// i de 4 et de 2
 	{
@@ -198,7 +191,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 			dest[compteur]=i;
 			compteur++;
 		}
-			
 	}
 
 	return compteur;
@@ -363,15 +355,20 @@ int main(void)
 
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
-	pthread_create(&thread0, NULL, thread_prime_factors, NULL);
+	//pthread_create(&thread0, NULL, thread_prime_factors, NULL);
 	//pthread_create(&thread1, NULL, thread_prime_factors, NULL);
 
 	
 
 	//Wait for the thread0 and the thread1 to be done
-	pthread_join(thread0, NULL);
+	//pthread_join(thread0, NULL);
 	//pthread_join(thread1, NULL);
 
+	while ( fgets(str, 60, file)!=NULL )
+	{
+		nb=atol(str);
+		print_prime_factors(nb);
+	}
 
 	pthread_mutex_destroy(&lockTree);
 	pthread_mutex_destroy(&lockFile);
