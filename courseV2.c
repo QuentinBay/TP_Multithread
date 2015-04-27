@@ -7,6 +7,9 @@
 
 /*-------------------------------------------ATTRIBUTS------------------------------------------*/
 
+//On code les nombres sur 64 bits donc au pire 64 facteurs (2^0*2¹...)
+#define MAX_FACTORS 64
+
 uint64_t nb;
 FILE * file;
 char str[60];
@@ -19,8 +22,7 @@ pthread_mutex_t lockFile = PTHREAD_MUTEX_INITIALIZER;
 //Gérer l'accès critique au screen
 pthread_mutex_t lockScreen = PTHREAD_MUTEX_INITIALIZER;
 
-//On code les nombres sur 64 bits donc au pire 64 facteurs (2^0*2¹...)
-const int MAX_FACTORS=64;
+
 
 
 ////////////////////////////////////////////////////////////////////////// ATTRIBUTS ARBRE BINAIRE
@@ -29,7 +31,7 @@ typedef struct node
 {
     uint64_t key; //n
     uint64_t nbFactors; //Nombre de facteurs premiers
-    uint64_t *factorsTree; //Tableau des facteurs premiers de n.
+    uint64_t factorsTree[MAX_FACTORS]; //Tableau des facteurs premiers de n.
     struct node *left;
     struct node *right;
 } node ;
@@ -462,19 +464,20 @@ void addNode (node** tree, uint64_t unNombre, uint64_t unNbFacteurs , uint64_t *
 	node *previous=NULL;
 	node *current=*tree;
 
-	node * unNoeud = malloc(sizeof(node));
+	node * unNoeud = (node*)malloc(sizeof(node));
 	printf("Ok le premier malloc\n");
 	unNoeud->key=unNombre;
 	unNoeud->nbFactors=unNbFacteurs;
 	// Allouons un espace memoire pour stocker les valeurs du tableau sinon elles seront perdus lors
 	// du changement de contexte de print_prime_factors
-	unNoeud->factorsTree = malloc(sizeof(facteurs));
+
 	printf("Ok le deuxieme malloc\n");
 	int i;
 	for (i = 0; i < unNbFacteurs; ++i)
 	{
 		unNoeud->factorsTree[i]=facteurs[i];
 	}
+
 	
 	unNoeud->left=NULL;
 	unNoeud->right=NULL;
@@ -600,7 +603,6 @@ void clearTree(node** tree)
 	if(current->right!=NULL) clearTree(&current->right);
 
 	//On a atteint une feuille, detruisons la !
-	free(current->factorsTree);
 	free(current);
 	*tree=NULL;
 }
