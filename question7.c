@@ -64,76 +64,72 @@ void print_prime_factors(uint64_t n)
 
 int get_prime_factors(uint64_t n,uint64_t*  dest)
 {
-					/*****************************
-					*  		INITIALISATION		 *
-					*****************************/
-	//Garder le nombre de facteurs premiers que l'on rentre dans le tableau
-	int compteur=0;
-	
-	//On divise n par 2 jusqu'à ce qu'il ne soit plus divisible par 2
+				/*****************
+				* INITIALISATION *
+				*****************/
+	int compteur=0; //Garde le nombre de facteurs premiers que l'on rentre dans le tableau
+	uint64_t i;
+
+
+				/***************
+				* TESTS POUR 2 *
+				***************/
 	while ( n%2 == 0)
 	{
 		n=n/2;
 		dest[compteur]=(uint64_t)2;
 		compteur++;
-		
 	}
 
-	if ( n == 1 )
+				/***************
+				* TESTS POUR 3 *
+				***************/
+	while ( n%3 == 0)
 	{
-		//On a trouvé tous les facteurs premiers
-		printf("\n");
-		return compteur;
+		n=n/3;
+		dest[compteur]=(uint64_t)3;
+		compteur++;
 	}
 
-			/***************************************************
-			*  		RECHERCHE DES FACTEURS PREMIERS DE N 	   *
-			****************************************************/
-	uint64_t i, j;
-	i=3;
-	while(n!=1 && i <= n)
+				/***************
+				* TESTS POUR 5 *
+				***************/
+	while ( n%5 == 0)
 	{
-		//printf("Boucle 1 :%ju\n", i);
-		//Vérifions s'il s'agit d'un nombre premier
-		for (j = 2; j <= i; j++)
+		n=n/5;
+		dest[compteur]=(uint64_t)5;
+		compteur++;
+	}
+
+		/************************************************************
+		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
+		************************************************************/
+	for( i=7; n!=1 ; i++ )
+	// On supprime les multiples de 2 et de 3 en incrementant alternativement
+	// i de 4 et de 2
+	{
+		while (n%i==0)
 		{
-			//printf("Boucle 2 :%ju\n", j);
-			if (i%j==0)
-			{
-				if (i==j)
-				{
-					//i est divisible par j et i = j donc c'est un nombre premier
-					if (n%i==0)
-					{
-						//i est un facteur premier de n
-						n=n/i;
-						dest[compteur]=i;
-						compteur++;
-						
-						if (n==1)
-						{
-							return compteur;
-						}
-						else
-						{
-							//On recommence à chercher un facteur premier
-							i=1;
-						}
-						
-					}
-				}
-				break;
-			}
+			// Tant que i est un facteur premier de n
+			n=n/i;
+			dest[compteur]=i;
+			compteur++;
 		}
-		i+=2;
 	}
-	return -1;
+	
+	if(n!=1)
+	{
+		dest[compteur]=n;
+		compteur++;
+	}
+
+	return compteur;
 }
 
 
 int main(void)
 {
-	file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("fileQuestion9.txt","r");
 	
 	if (pthread_mutex_init(&lock, NULL) != 0)
     {

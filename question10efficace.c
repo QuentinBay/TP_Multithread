@@ -140,7 +140,6 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 				*****************/
 	int compteur=0; //Garde le nombre de facteurs premiers que l'on rentre dans le tableau
 	uint64_t i;
-	uint64_t pasI=4;
 
 
 				/***************
@@ -177,7 +176,7 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		/************************************************************
 		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
 		************************************************************/
-	for( i=7; i*i<=n ; i+=pasI, pasI=6-pasI )
+	for( i=7; n!=1 ; i++ )
 	// On supprime les multiples de 2 et de 3 en incrementant alternativement
 	// i de 4 et de 2
 	{
@@ -354,7 +353,9 @@ void clearTree(node** tree)
 
 int main(void)
 {
-	file = fopen ("primes.txt","r");
+	printf("En utilisant un arbre binaire :\n");
+	
+	file = fopen ("fileQuestion10efficace.txt","r");
 
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
@@ -375,7 +376,6 @@ int main(void)
 	//Liberons la memoire !
 	printf("DESTRUCTION DE L'ARBRE :\n");
 	clearTree(&arbre);
-	displayTree(arbre);
     return 0;
 }
 

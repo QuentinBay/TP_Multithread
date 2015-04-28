@@ -133,7 +133,7 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 
 int main(void)
 {
-	file = fopen ("fileQuestion10pasEfficace.txt","r");
+	file = fopen ("fileQuestion10efficace.txt","r");
 	
 	if (pthread_mutex_init(&lock, NULL) != 0)
     {

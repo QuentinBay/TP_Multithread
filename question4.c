@@ -49,7 +49,7 @@ int main(void)
 	uint64_t nb;
 	uint64_t nb2;
 	FILE * file;
-	file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("fileQuestion4pasEfficace.txt","r");
 	char str[60];
 	char str2[60];
 	pthread_t thread0;

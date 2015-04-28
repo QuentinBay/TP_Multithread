@@ -68,6 +68,7 @@ void print_prime_factors(uint64_t n)
 
 int main(void)
 {
+	printf("En déplaçant la boucle de lecture dans chacun des threads :\n");
 	file = fopen ("fileQuestion4pasEfficace.txt","r");
 	
 	if (pthread_mutex_init(&lock, NULL) != 0)
