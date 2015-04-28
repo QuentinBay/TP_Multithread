@@ -15,6 +15,8 @@ FILE * file;
 char str[60];
 pthread_t thread0;
 pthread_t thread1;
+pthread_t thread2;
+pthread_t thread3;
 
 //Gérer l'accès critique au file
 pthread_mutex_t lockFile = PTHREAD_MUTEX_INITIALIZER;
@@ -173,7 +175,7 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 		/************************************************************
 		* TESTS POUR LE RESTE DES FACTEURS PREMIERS EN PARTANT DE 7 *
 		************************************************************/
-	for( i=7; n!=1 ; i+=pasI, pasI=6-pasI )
+	for( i=7; i*i<=n ; i+=pasI, pasI=6-pasI )
 	// On supprime les multiples de 2 et de 3 en incrementant alternativement
 	// i de 4 et de 2
 	{
@@ -184,6 +186,12 @@ int get_prime_factors(uint64_t n,uint64_t*  dest)
 			dest[compteur]=i;
 			compteur++;
 		}
+	}
+	
+	if(n!=1)
+	{
+		dest[compteur]=n;
+		compteur++;
 	}
 
 	return compteur;
@@ -343,18 +351,21 @@ void clearTree(node** tree)
 
 int main(void)
 {
-	file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("numbers.txt","r");
 
 	//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 	//avant d'appeler des fonctions dans le main
 	pthread_create(&thread0, NULL, thread_prime_factors, NULL);
-	//pthread_create(&thread1, NULL, thread_prime_factors, NULL);
-
+	pthread_create(&thread1, NULL, thread_prime_factors, NULL);
+	pthread_create(&thread2, NULL, thread_prime_factors, NULL);
+	pthread_create(&thread3, NULL, thread_prime_factors, NULL);
 	
 
 	//Wait for the thread0 and the thread1 to be done
 	pthread_join(thread0, NULL);
-	//pthread_join(thread1, NULL);
+	pthread_join(thread1, NULL);
+	pthread_join(thread2, NULL);
+	pthread_join(thread3, NULL);
 
 
 	pthread_mutex_destroy(&lockTree);
