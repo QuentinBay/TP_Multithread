@@ -5,6 +5,13 @@
 #include <math.h>
 #include <pthread.h>
 
+/*--------------------------------------DECLARATION METHODES------------------------------------*/
+void* thread_prime_factors(void * u);
+
+void print_prime_factors(uint64_t n);
+
+/*--------------------------------------------METHODES-----------------------------------------*/
+
 void* thread_prime_factors(void * u)
 {
 	//Déréférencement
@@ -39,10 +46,11 @@ void print_prime_factors(uint64_t n)
 
 int main(void)
 {
+	printf("En utilisant 2 threads :\n");
 	uint64_t nb;
 	uint64_t nb2;
 	FILE * file;
-	file = fopen ("fileQuestion3.txt","r");
+	file = fopen ("fileQuestion4efficace.txt","r");
 	char str[60];
 	char str2[60];
 	pthread_t thread0;
@@ -52,7 +60,7 @@ int main(void)
 	{
 		nb=atol(str);
 		nb2=atol(str2);
-		printf("2 nb en même temps\n");
+		printf("2 nombres en même temps :\n");
 		//Attention en C l'appel des méthode est synchrone donc il faut d'abord créer un thread 
 		//avant d'appeler des fonctions dans le main
 		pthread_create(&thread0, NULL, thread_prime_factors, &nb);

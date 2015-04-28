@@ -37,8 +37,8 @@ question2: question2.c
 question3: question3.c
 	gcc -Wall -pthread -o question3 question3.c -lm
 
-question5: question5.c
-	gcc -Wall -pthread -o question5 question5.c -lm
+question4: question4.c
+	gcc -Wall -pthread -o question4 question4.c -lm	
 
 question7: question7.c
 	gcc -Wall -pthread -o question7 question7.c -lm	
@@ -54,8 +54,20 @@ course: course.c
 
 courseV2: courseV2.c
 	gcc -Wall -pthread -o courseV2 courseV2.c -lm
-	
-# add your own rules when you create new programs
+
+##Mise en evidence efficacite des threads
+question4efficace: question4efficace.c
+	gcc -Wall -pthread -o question4efficace question4efficace.c -lm
+
+question2efficace: question2efficace.c
+	gcc -Wall -pthread -o question2efficace question2efficace.c -lm
+
+question4pasEfficace: question4pasEfficace.c
+	gcc -Wall -pthread -o question4pasEfficace question4pasEfficace.c -lm
+
+question2pasEfficace: question2pasEfficace.c
+	gcc -Wall -pthread -o question2pasEfficace question2pasEfficace.c -lm	
+
 
 #########################
 ## program execution
@@ -69,8 +81,16 @@ run2: question2
 run3: question3
 	time ./question3
 
-run5: question5
-	time ./question5
+run4: question4
+	time ./question4
+
+run4efficace: question4efficace question2pasEfficace
+	time ./question4efficace
+	time ./question2pasEfficace
+
+run4pasEfficace: question4pasEfficace question2efficace
+	time ./question4pasEfficace
+	time ./question2efficace
 
 run7: question7
 	time ./question7
@@ -91,5 +111,5 @@ run12: courseV2
 ## utilities
 
 clean:
-	rm -f question1 question2 question3 question5 question7 question8 question10 course courseV2 tiny.txt small.txt medium.txt large.txt many.txt 
+	rm -f question1 question2 question3 question4 question5 question7 question8 question10 course courseV2 tiny.txt small.txt medium.txt large.txt many.txt 
 
