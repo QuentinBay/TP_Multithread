@@ -5,6 +5,8 @@
 #include <math.h>
 #include <pthread.h>
 
+/*-------------------------------------------ATTRIBUTS------------------------------------------*/
+
 uint64_t nb;
 FILE * file;
 char str[60];
@@ -14,6 +16,12 @@ pthread_t thread1;
 //Gérer l'accès critique au file
 pthread_mutex_t lock;
 
+/*--------------------------------------DECLARATION METHODES------------------------------------*/
+void* thread_prime_factors(void * u);
+
+void print_prime_factors(uint64_t n);
+
+/*--------------------------------------------METHODES-----------------------------------------*/
 
 void* thread_prime_factors(void * u)
 {
@@ -60,7 +68,7 @@ void print_prime_factors(uint64_t n)
 
 int main(void)
 {
-	file = fopen ("fileQuestion4.txt","r");
+	file = fopen ("fileQuestion4pasEfficace.txt","r");
 	
 	if (pthread_mutex_init(&lock, NULL) != 0)
     {

@@ -34,11 +34,11 @@ question1: question1.c
 question2: question2.c
 	gcc -Wall -pthread -o question2 question2.c -lm
 
-question3: question3.c
-	gcc -Wall -pthread -o question3 question3.c -lm
-
 question4: question4.c
 	gcc -Wall -pthread -o question4 question4.c -lm	
+
+question5: question5.c
+	gcc -Wall -pthread -o question5 question5.c -lm
 
 question7: question7.c
 	gcc -Wall -pthread -o question7 question7.c -lm	
@@ -78,19 +78,11 @@ run1: question1
 run2: question2
 	time ./question2
 
-run3: question3
-	time ./question3
-
 run4: question4
 	time ./question4
 
-run4efficace: question4efficace question2pasEfficace
-	time ./question4efficace
-	time ./question2pasEfficace
-
-run4pasEfficace: question4pasEfficace question2efficace
-	time ./question4pasEfficace
-	time ./question2efficace
+run5: question5
+	time ./question5
 
 run7: question7
 	time ./question7
@@ -106,6 +98,15 @@ run11: course
 
 run12: courseV2
 	time ./courseV2
+
+##Mise en evidence efficacite des threads
+run4efficace: question4efficace question2pasEfficace
+	time ./question4efficace
+	time ./question2pasEfficace
+
+run4pasEfficace: question4pasEfficace question2efficace
+	time ./question4pasEfficace
+	time ./question2efficace
 
 #########################
 ## utilities
